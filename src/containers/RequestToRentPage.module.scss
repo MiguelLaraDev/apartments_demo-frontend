@@ -27,6 +27,17 @@
       margin: 20px auto;
     }
 
+    .datepicker {
+      width: 50%;
+      margin: 20px auto;
+      display: flex;
+      flex-direction: column;
+
+      .caption {
+        margin-top: 10px;
+      }
+    }
+
     .button {
       margin: 20px auto;
     }
