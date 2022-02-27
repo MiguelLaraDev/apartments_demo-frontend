@@ -4,102 +4,37 @@ import { Button, TextField, Typography } from "@mui/material";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
-import { format, differenceInYears } from "date-fns";
+import { format } from "date-fns";
 
+import useRentForm from "../hooks/useRentForm";
 import styles from "./RequestToRentPage.module.scss";
 
-const formatDate = (value: Date) => {
-  return format(value, "yyyy-MM-dd");
-};
-
-const validateBirthday = (birthday: string) => {
-  const date = new Date(birthday);
-  const age = differenceInYears(new Date(), date);
-
-  if (age < 18) {
-    return {
-      error: true,
-      message: "You must have at least 18 years old in order to rent a flat",
-    };
-  }
-
-  return {
-    error: false,
-    message: "",
-  };
-};
-
-const validateName = (name: string) => {
-  const splitted = name.split(" ");
-
-  if (splitted.length < 2) {
-    return {
-      error: true,
-      message: "Please enter your first and last name",
-    };
-  }
-
-  if (name.length < 10) {
-    return {
-      error: true,
-      message: "Looks like your name is too short",
-    };
-  }
-
-  return {
-    error: false,
-    message: "",
-  };
-};
-
 /* 
-TODO: 
-. Si !avaialable capar.
-. Hasta que no esté todo validado no se puede enviar.
+TODO:
 . Pedir los datos del piso a la API.
 . Enviar el pedido de renta a la API.
 . Mostar la fecha en formato yyy-mm-dd.
-. Meter todo en un customHook.
 */
 
 const RequestToRentPage = (): JSX.Element => {
-  /* 
-    The birthdate’s format is YYYY/MM/DD
-    Users must be older than 18 years old.
-    The apartment must be available
-    */
+  const { errors, fields, update } = useRentForm();
 
   const params = useParams();
 
-  const available = false;
-
-  const [datePickerValue, setDatePickerValue] = useState(
-    formatDate(new Date())
-  );
-  const [datePickerError, setDatePickerError] = useState({
-    error: false,
-    message: "",
-  });
-  const [userName, setUserName] = useState("");
-  const [userNameError, setUserNameError] = useState({
-    error: false,
-    message: "",
-  });
+  const available = true;
 
   const submitButtonDisable = (): boolean => {
-    return datePickerError.error || userNameError.error || userName.length < 1;
+    return errors.birthday.error || errors.name.error || fields.name.length < 1;
   };
 
   const handleDatePicker = (newValue: any) => {
     if (newValue) {
-      setDatePickerError(validateBirthday(newValue));
-      setDatePickerValue(format(new Date(newValue), "yyyy-MM-dd"));
+      update("birthday", format(new Date(newValue), "yyyy-MM-dd"));
     }
   };
 
   const handleNameField = (name: string) => {
-    setUserNameError(validateName(name));
-    setUserName(name);
+    update("name", name);
   };
 
   const handleSubmit = () => {
@@ -166,27 +101,26 @@ const RequestToRentPage = (): JSX.Element => {
 
           <TextField
             className={styles.field}
-            id="user-name"
             label="Name"
             variant="standard"
             fullWidth
             onBlur={(e) => handleNameField(e.currentTarget.value)}
             onChange={(e) => handleNameField(e.currentTarget.value)}
-            error={userNameError.error}
-            helperText={userNameError.message}
+            error={errors.name.error}
+            helperText={errors.name.message}
           />
 
           <div className={styles.datepicker}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 label="Birthday"
-                value={datePickerValue}
+                value={fields.birthday}
                 onChange={handleDatePicker}
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    error={datePickerError.error}
-                    helperText={datePickerError.message}
+                    error={errors.birthday.error}
+                    helperText={errors.birthday.message}
                   />
                 )}
                 disableFuture
