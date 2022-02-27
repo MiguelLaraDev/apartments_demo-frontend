@@ -1,10 +1,8 @@
-import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button, TextField, Typography } from "@mui/material";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
-import { format } from "date-fns";
 
 import useRentForm from "../hooks/useRentForm";
 import styles from "./RequestToRentPage.module.scss";
@@ -29,7 +27,7 @@ const RequestToRentPage = (): JSX.Element => {
 
   const handleDatePicker = (newValue: any) => {
     if (newValue) {
-      update("birthday", format(new Date(newValue), "yyyy-MM-dd"));
+      update("birthday", newValue);
     }
   };
 
