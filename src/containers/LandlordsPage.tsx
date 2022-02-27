@@ -1,5 +1,7 @@
+import styles from "./LandlordsPage.module.scss";
+
 const LandlordsPage = () => {
-  return <div>LandlordsPage</div>;
+  return <div className={styles.LandlordsPage}>LandlordsPage</div>;
 };
 
 export default LandlordsPage;

@@ -1,0 +1,21 @@
+.apartmentListItem {
+  .card {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+
+    .content {
+      flex-grow: 1;
+
+      .row {
+        display: flex;
+        flex-direction: row;
+
+        .label {
+          width: 20%;
+          max-width: 20%;
+        }
+      }
+    }
+  }
+}
