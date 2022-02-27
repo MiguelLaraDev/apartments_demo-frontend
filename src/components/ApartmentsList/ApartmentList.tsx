@@ -4,7 +4,7 @@ import styles from "./ApartmentList.module.scss";
 const ApartmentList = () => {
   const items = [
     {
-      id: 1,
+      id: "1",
       title: "Apart 1",
       landlord: "Juan Perez",
       available: true,
@@ -13,9 +13,14 @@ const ApartmentList = () => {
 
   return (
     <ul className={styles.apartmentList}>
-      {items.map((el) => (
-        <li key={el.id}>
-          <ApartmentListItem />
+      {items.map(({ id, title, landlord, available }) => (
+        <li key={id}>
+          <ApartmentListItem
+            id={id}
+            title={title}
+            landlord={landlord}
+            available={available}
+          />
         </li>
       ))}
     </ul>
