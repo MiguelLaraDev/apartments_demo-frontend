@@ -1,10 +1,15 @@
 import { Button, TextField, Typography } from "@mui/material";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "@mui/lab/DatePicker";
 import { useParams } from "react-router-dom";
 
 import styles from "./RequestToRentPage.module.scss";
+import { useState } from "react";
 
 const RequestToRentPage = (): JSX.Element => {
   const params = useParams();
+  const [value, setValue] = useState(null);
 
   const handleSubmit = () => {
     console.log("onClick");
@@ -12,20 +17,11 @@ const RequestToRentPage = (): JSX.Element => {
 
   return (
     <div className={styles.requestToRentPage}>
-      <Typography className={styles.label} variant="h3" gutterBottom>
+      <Typography className={styles.label} variant="h4" gutterBottom>
         Request to Rent
       </Typography>
 
       <div className={styles.group}>
-        <Typography
-          className={styles.label}
-          align="left"
-          variant="h4"
-          gutterBottom
-        >
-          Apartment details:
-        </Typography>
-
         <div className={styles.row}>
           <Typography
             className={styles.label}
@@ -59,7 +55,7 @@ const RequestToRentPage = (): JSX.Element => {
         <Typography
           className={styles.label}
           align="left"
-          variant="h4"
+          variant="h5"
           gutterBottom
         >
           User details:
@@ -73,17 +69,21 @@ const RequestToRentPage = (): JSX.Element => {
           fullWidth
         />
 
-        <TextField
-          className={styles.field}
-          id="user-birthday"
-          label="Birthday"
-          variant="standard"
-          fullWidth
-        />
+        <div className={styles.field}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="Birthday"
+              value={value}
+              onChange={(newValue) => {
+                setValue(newValue);
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
+        </div>
 
         <Button
           className={styles.button}
-          size="small"
           variant="contained"
           disableElevation
           onClick={handleSubmit}
