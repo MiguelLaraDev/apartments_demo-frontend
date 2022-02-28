@@ -19,6 +19,7 @@ const useRentForm = () => {
       message: "",
     },
   });
+
   const formatDate = (value: Date) => {
     return format(value, "yyyy-MM-dd");
   };
@@ -92,7 +93,7 @@ const useRentForm = () => {
   const setFields = (type: string, value: string): void => {
     switch (type) {
       case "birthday":
-        setBirthday(value);
+        setBirthday(format(new Date(value), "yyyy-MM-dd"));
         break;
 
       case "name":
@@ -109,9 +110,9 @@ const useRentForm = () => {
     setFields(type, value);
   };
 
-  console.log(errors);
-  console.log(birthday);
-  console.log(name);
+  //   console.log(errors);
+  //   console.log(birthday);
+  //   console.log(name);
 
   return {
     errors,

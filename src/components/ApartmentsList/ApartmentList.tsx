@@ -1,16 +1,11 @@
-import ApartmentListItem from "./ApartmentListItem";
+import ApartmentListItem, { IApartmentListItem } from "./ApartmentListItem";
 import styles from "./ApartmentList.module.scss";
 
-const ApartmentList = () => {
-  const items = [
-    {
-      id: "1",
-      title: "Apart 1",
-      landlord: "Juan Perez",
-      available: true,
-    },
-  ];
+export interface IApartmentList {
+  items: IApartmentListItem[];
+}
 
+const ApartmentList: React.FC<IApartmentList> = ({ items }): JSX.Element => {
   return (
     <ul className={styles.apartmentList}>
       {items.map(({ id, title, landlord, available }) => (

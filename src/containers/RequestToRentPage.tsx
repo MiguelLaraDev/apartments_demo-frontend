@@ -6,15 +6,12 @@ import DatePicker from "@mui/lab/DatePicker";
 
 import useRentForm from "../hooks/useRentForm";
 import styles from "./RequestToRentPage.module.scss";
+import useFetchData from "../hooks/useFetchData";
 
-/* 
-TODO:
-. Pedir los datos del piso a la API.
-. Enviar el pedido de renta a la API.
-. Mostar la fecha en formato yyy-mm-dd.
-*/
+const apiUrl = "https://jsonplaceholder.typicode.com/todos/1"; // TODO: Move inta a .env file.
 
 const RequestToRentPage = (): JSX.Element => {
+  const { data, loading } = useFetchData(apiUrl);
   const { errors, fields, update } = useRentForm();
 
   const params = useParams();
