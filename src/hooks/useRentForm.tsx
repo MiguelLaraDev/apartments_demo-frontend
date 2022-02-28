@@ -1,3 +1,4 @@
+import axios from "axios";
 import { format, differenceInYears } from "date-fns";
 import { useState } from "react";
 
@@ -7,6 +8,7 @@ export interface IFormErrors {
 }
 
 const useRentForm = () => {
+  const [rentStatus, setRentStatus] = useState("");
   const [birthday, setBirthday] = useState("");
   const [name, setName] = useState("");
   const [errors, setErrors] = useState({
@@ -110,13 +112,28 @@ const useRentForm = () => {
     setFields(type, value);
   };
 
-  //   console.log(errors);
-  //   console.log(birthday);
-  //   console.log(name);
+  const submit = async (url: string, apartmentId: string) => {
+    const data = {
+      user: {
+        name,
+        birthday,
+      },
+      apartmentId,
+    };
+
+    try {
+      await axios.post(url, data);
+      setRentStatus("success");
+    } catch (error) {
+      setRentStatus("error");
+    }
+  };
 
   return {
     errors,
     fields: { birthday, name },
+    rentStatus,
+    submit,
     update,
   };
 };

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { Button, TextField, Typography } from "@mui/material";
+import { Alert, Button, TextField, Typography } from "@mui/material";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
@@ -8,14 +8,14 @@ import useRentForm from "../hooks/useRentForm";
 import styles from "./RequestToRentPage.module.scss";
 import useFetchData from "../hooks/useFetchData";
 
-const apiUrl = "https://jsonplaceholder.typicode.com/todos/1"; // TODO: Move inta a .env file.
+const apiUrlGet = "https://jsonplaceholder.typicode.com/todos/1"; // TODO: Move inta a .env file.
+const apiUrlPost = "https://jsonplaceholder.typicode.com/posts"; // TODO: Move inta a .env file.
 
 const RequestToRentPage = (): JSX.Element => {
-  const { data, loading } = useFetchData(apiUrl);
-  const { errors, fields, update } = useRentForm();
+  const { data, loading } = useFetchData(apiUrlGet);
+  const { errors, fields, rentStatus, submit, update } = useRentForm();
 
   const params = useParams();
-
   const available = true;
 
   const submitButtonDisable = (): boolean => {
@@ -33,7 +33,9 @@ const RequestToRentPage = (): JSX.Element => {
   };
 
   const handleSubmit = () => {
-    console.log("onClick");
+    if (params.apartmentId) {
+      submit(apiUrlPost, params.apartmentId);
+    }
   };
 
   return (
@@ -41,6 +43,12 @@ const RequestToRentPage = (): JSX.Element => {
       <Typography className={styles.label} variant="h4" gutterBottom>
         Request to Rent
       </Typography>
+
+      {rentStatus === "success" && <Alert severity="success">Succes!</Alert>}
+      
+      {rentStatus === "error" && (
+        <Alert severity="error">Error. Try again.</Alert>
+      )}
 
       <div className={styles.group}>
         <div className={styles.row}>
