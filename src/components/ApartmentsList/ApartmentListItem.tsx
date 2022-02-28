@@ -11,7 +11,7 @@ export interface IApartmentListItem {
   id: string;
   title: string;
   landlord: string;
-  available: boolean;
+  available: boolean | string;
 }
 
 const ApartmentListItem: React.FC<IApartmentListItem> = ({
@@ -58,6 +58,7 @@ const ApartmentListItem: React.FC<IApartmentListItem> = ({
             variant="contained"
             disableElevation
             onClick={handleClick}
+            disabled={!available}
           >
             Request to rent
           </Button>

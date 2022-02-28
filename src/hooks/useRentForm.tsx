@@ -112,17 +112,16 @@ const useRentForm = () => {
     setFields(type, value);
   };
 
-  const submit = async (url: string, apartmentId: string) => {
+  const submit = async (url: string) => {
     const data = {
       user: {
         name,
         birthday,
       },
-      apartmentId,
     };
 
     try {
-      await axios.post(url, data);
+      await axios.put(url, data);
       setRentStatus("success");
     } catch (error) {
       setRentStatus("error");

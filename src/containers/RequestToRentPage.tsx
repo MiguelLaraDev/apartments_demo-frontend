@@ -7,16 +7,31 @@ import DatePicker from "@mui/lab/DatePicker";
 import useRentForm from "../hooks/useRentForm";
 import styles from "./RequestToRentPage.module.scss";
 import useFetchData from "../hooks/useFetchData";
+import { IApartmentListItem } from "../components/ApartmentsList/ApartmentListItem";
 
-const apiUrlGet = "https://jsonplaceholder.typicode.com/todos/1"; // TODO: Move inta a .env file.
-const apiUrlPost = "https://jsonplaceholder.typicode.com/posts"; // TODO: Move inta a .env file.
+const apiUrl = process.env.REACT_APP_APARTMENTS_API;
+
+const convertToApartment = (data: IApartmentListItem | undefined) => {
+  if (!data) {
+    return null;
+  }
+
+  const output: IApartmentListItem = {
+    available: data.available === "true",
+    id: data.id,
+    landlord: data.landlord,
+    title: data.title,
+  };
+
+  return output;
+};
 
 const RequestToRentPage = (): JSX.Element => {
-  const { data, loading } = useFetchData(apiUrlGet);
-  const { errors, fields, rentStatus, submit, update } = useRentForm();
-
   const params = useParams();
-  const available = true;
+  const { apartmentId } = params;
+  const { data, loading } = useFetchData(`${apiUrl}/${apartmentId}`);
+  const { errors, fields, rentStatus, submit, update } = useRentForm();
+  const apartment: IApartmentListItem | null = convertToApartment(data);
 
   const submitButtonDisable = (): boolean => {
     return errors.birthday.error || errors.name.error || fields.name.length < 1;
@@ -34,18 +49,31 @@ const RequestToRentPage = (): JSX.Element => {
 
   const handleSubmit = () => {
     if (params.apartmentId) {
-      submit(apiUrlPost, params.apartmentId);
+      submit(`${apiUrl}/${apartmentId}`);
     }
   };
 
+  if (loading) {
+    return (
+      <Typography className={styles.label} variant="h2" gutterBottom>
+        ...loading
+      </Typography>
+    );
+  }
+  if (!apartment) {
+    return <Alert severity="error">Apartment not found</Alert>;
+  }
+
   return (
     <div className={styles.requestToRentPage}>
-      <Typography className={styles.label} variant="h4" gutterBottom>
+      <Typography className={styles.label} variant="h2" gutterBottom>
         Request to Rent
       </Typography>
 
-      {rentStatus === "success" && <Alert severity="success">Succes!</Alert>}
-      
+      {rentStatus === "success" && (
+        <Alert severity="success">Success, your have rented this apartment!</Alert>
+      )}
+
       {rentStatus === "error" && (
         <Alert severity="error">Error. Try again.</Alert>
       )}
@@ -61,7 +89,7 @@ const RequestToRentPage = (): JSX.Element => {
             Title:
           </Typography>
           <Typography align="left" variant="body1" gutterBottom>
-            Studio apartment to rent in Goya
+            {apartment.title}
           </Typography>
         </div>
 
@@ -75,12 +103,12 @@ const RequestToRentPage = (): JSX.Element => {
             Landlord:
           </Typography>
           <Typography align="left" variant="body1">
-            Luis Gonzalez
+            {apartment.landlord}
           </Typography>
         </div>
       </div>
 
-      {!available && (
+      {!apartment.available && (
         <Typography
           className={styles.label}
           align="left"
@@ -91,7 +119,7 @@ const RequestToRentPage = (): JSX.Element => {
         </Typography>
       )}
 
-      {available && (
+      {apartment.available && (
         <div className={styles.group}>
           <Typography
             className={styles.label}

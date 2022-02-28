@@ -14,7 +14,7 @@ const ApartmentList: React.FC<IApartmentList> = ({ items }): JSX.Element => {
             id={id}
             title={title}
             landlord={landlord}
-            available={available}
+            available={available === "true"}
           />
         </li>
       ))}

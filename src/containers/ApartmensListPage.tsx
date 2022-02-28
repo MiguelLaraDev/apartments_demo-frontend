@@ -3,8 +3,9 @@ import ApartmentList from "../components/ApartmentsList/ApartmentList";
 import useFetchData from "../hooks/useFetchData";
 import styles from "./ApartmensListPage.module.scss";
 
+const apiUrl = process.env.REACT_APP_APARTMENTS_API;
+
 const ApartmensListPage = () => {
-  const apiUrl = process.env.REACT_APP_APARTMENTS_API;
   const { data, loading } = useFetchData(apiUrl);
 
   if (!data) {
