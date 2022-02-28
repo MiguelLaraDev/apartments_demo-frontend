@@ -2,19 +2,19 @@ import { Typography } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
 
 import LandlordsPage from "./containers/LandlordsPage";
-import UsersPage from "./containers/UsersPage";
+import ApartmensListPage from "./containers/ApartmensListPage";
 import RequestToRentPage from "./containers/RequestToRentPage";
 import "./App.css";
 
 function App() {
   return (
     <div>
-      <Typography align="center" variant="h3" className="appTitle">
-        Apartments Renting (Demo App)
+      <Typography align="center" variant="h1" className="appTitle">
+        Apartments (Demo App)
       </Typography>
       <Routes>
-        <Route path="/" element={<UsersPage />} />
-        <Route path="users" element={<UsersPage />} />
+        <Route path="/" element={<ApartmensListPage />} />
+        <Route path="users" element={<ApartmensListPage />} />
         <Route path="landlords" element={<LandlordsPage />} />
         <Route
           path="request-to-rent/:apartmentId"

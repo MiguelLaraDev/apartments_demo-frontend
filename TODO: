@@ -1,0 +1,12 @@
+TODO:
+
+Listado: 
+    GET del listado de pisos con la API real.
+
+Rentar un piso:
+    Evitar que la llamada loopee.
+    GET del piso con la API real.
+    POST al rentar contra la API real.
+
+useFetch:
+    Devolver un mensaje de error.
