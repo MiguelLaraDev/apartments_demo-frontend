@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
-import ApartmentList from "../components/ApartmentsList/ApartmentList";
-import useFetchData from "../hooks/useFetchData";
-import styles from "./ApartmensListPage.module.scss";
+import ApartmentList from "../../components/ApartmentsList/ApartmentsList";
+import useFetchData from "../../hooks/useFetchData";
+import styles from "./ApartmentsListPage.module.scss";
 
 const apiUrl = process.env.REACT_APP_APARTMENTS_API;
 

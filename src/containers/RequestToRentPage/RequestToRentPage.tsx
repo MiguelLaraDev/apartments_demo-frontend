@@ -4,10 +4,10 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 
-import useRentForm from "../hooks/useRentForm";
+import useRentForm from "../../hooks/useRentForm";
 import styles from "./RequestToRentPage.module.scss";
-import useFetchData from "../hooks/useFetchData";
-import { IApartmentListItem } from "../components/ApartmentsList/ApartmentListItem";
+import useFetchData from "../../hooks/useFetchData";
+import { IApartmentListItem } from "../../components/ApartmentsList/ApartmentsListItem";
 
 const apiUrl = process.env.REACT_APP_APARTMENTS_API;
 

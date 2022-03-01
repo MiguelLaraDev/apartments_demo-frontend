@@ -1,9 +1,0 @@
-TODO:
-
-Evitar loopeos en las apis.
-
-Rentar un piso:
-    POST al rentar contra la API real.
-
-useFetch:
-    Devolver un mensajes de error.

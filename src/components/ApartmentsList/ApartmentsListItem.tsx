@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 
-import styles from "./ApartmentListItem.module.scss";
+import styles from "./ApartmentsListItem.module.scss";
 
 export interface IApartmentListItem {
   id: string;
@@ -14,7 +14,7 @@ export interface IApartmentListItem {
   available: boolean | string;
 }
 
-const ApartmentListItem: React.FC<IApartmentListItem> = ({
+const ApartmentsListItem: React.FC<IApartmentListItem> = ({
   id,
   title,
   landlord,
@@ -68,4 +68,4 @@ const ApartmentListItem: React.FC<IApartmentListItem> = ({
   );
 };
 
-export default ApartmentListItem;
+export default ApartmentsListItem;

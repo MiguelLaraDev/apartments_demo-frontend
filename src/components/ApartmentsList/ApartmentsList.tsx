@@ -1,5 +1,5 @@
-import ApartmentListItem, { IApartmentListItem } from "./ApartmentListItem";
-import styles from "./ApartmentList.module.scss";
+import ApartmentsListItem, { IApartmentListItem } from "./ApartmentsListItem";
+import styles from "./ApartmentsList.module.scss";
 
 export interface IApartmentList {
   items: IApartmentListItem[];
@@ -10,7 +10,7 @@ const ApartmentList: React.FC<IApartmentList> = ({ items }): JSX.Element => {
     <ul className={styles.apartmentList}>
       {items.map(({ id, title, landlord, available }) => (
         <li key={id}>
-          <ApartmentListItem
+          <ApartmentsListItem
             id={id}
             title={title}
             landlord={landlord}
