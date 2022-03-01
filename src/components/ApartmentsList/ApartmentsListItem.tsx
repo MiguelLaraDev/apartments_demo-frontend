@@ -6,15 +6,9 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 
 import styles from "./ApartmentsListItem.module.scss";
+import IApartment from "src/interfaces/IApartment";
 
-export interface IApartmentListItem {
-  id: string;
-  title: string;
-  landlord: string;
-  available: boolean | string;
-}
-
-const ApartmentsListItem: React.FC<IApartmentListItem> = ({
+const ApartmentsListItem: React.FC<IApartment> = ({
   id,
   title,
   landlord,

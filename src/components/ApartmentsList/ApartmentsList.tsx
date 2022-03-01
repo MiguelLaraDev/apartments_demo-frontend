@@ -1,9 +1,6 @@
-import ApartmentsListItem, { IApartmentListItem } from "./ApartmentsListItem";
+import ApartmentsListItem from "./ApartmentsListItem";
 import styles from "./ApartmentsList.module.scss";
-
-export interface IApartmentList {
-  items: IApartmentListItem[];
-}
+import IApartmentList from "src/interfaces/IApartmentList";
 
 const ApartmentList: React.FC<IApartmentList> = ({ items }): JSX.Element => {
   return (

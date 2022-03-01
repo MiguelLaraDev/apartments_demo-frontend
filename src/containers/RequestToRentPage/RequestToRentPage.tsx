@@ -4,19 +4,19 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 
-import useRentForm from "../../hooks/useRentForm";
+import IApartment from "src/interfaces/IApartment";
 import styles from "./RequestToRentPage.module.scss";
+import useRentForm from "../../hooks/useRentForm";
 import useFetchData from "../../hooks/useFetchData";
-import { IApartmentListItem } from "../../components/ApartmentsList/ApartmentsListItem";
 
 const apiUrl = process.env.REACT_APP_APARTMENTS_API;
 
-const convertToApartment = (data: IApartmentListItem | undefined) => {
+const convertToApartment = (data: IApartment | undefined) => {
   if (!data) {
     return null;
   }
 
-  const output: IApartmentListItem = {
+  const output: IApartment = {
     available: data.available === "true",
     id: data.id,
     landlord: data.landlord,
@@ -31,7 +31,7 @@ const RequestToRentPage = (): JSX.Element => {
   const { apartmentId } = params;
   const { data, loading } = useFetchData(`${apiUrl}/${apartmentId}`);
   const { errors, fields, rentStatus, submit, update } = useRentForm();
-  const apartment: IApartmentListItem | null = convertToApartment(data);
+  const apartment: IApartment | null = convertToApartment(data);
 
   const submitButtonDisable = (): boolean => {
     return errors.birthday.error || errors.name.error || fields.name.length < 1;
@@ -71,7 +71,9 @@ const RequestToRentPage = (): JSX.Element => {
       </Typography>
 
       {rentStatus === "success" && (
-        <Alert severity="success">Success, your have rented this apartment!</Alert>
+        <Alert severity="success">
+          Success, your have rented this apartment!
+        </Alert>
       )}
 
       {rentStatus === "error" && (
